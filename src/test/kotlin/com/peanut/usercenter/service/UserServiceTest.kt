@@ -5,6 +5,7 @@ import jakarta.annotation.Resource
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.util.DigestUtils
 
 /**
  * 用户服务测试
@@ -30,5 +31,24 @@ internal class UserServiceTest {
         val result = userService?.save(user)
         System.out.println(result)
         Assertions.assertEquals(true, result)
+    }
+
+    @Test
+    fun testDigest() {
+        val digestPassword = DigestUtils.md5DigestAsHex("123".toByteArray())
+        System.out.println(digestPassword)
+    }
+
+    @Test
+    fun userRegister() {
+        var userAccount = "wzy melon"
+        var userPassword = "12345678"
+        var checkPassword = "12345678"
+        var result = userService?.userRegister(userAccount, userPassword, checkPassword) ?: -1
+        Assertions.assertEquals(-1, result)
+
+        userAccount = "wzywatermelon"
+        result = userService?.userRegister(userAccount, userPassword, checkPassword) ?: -1
+        Assertions.assertTrue(result > 0)
     }
 }

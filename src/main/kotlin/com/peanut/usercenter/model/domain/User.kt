@@ -15,8 +15,7 @@ data class User (
     /**
      * id
      */
-    @TableId(type = IdType.AUTO)
-    private val id: Long? = null,
+    @TableId(type = IdType.AUTO) val id: Long? = null,
 
     /**
      * 用户昵称
