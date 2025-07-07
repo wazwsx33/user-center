@@ -20,17 +20,17 @@ class UserCenterApplication {
         }
     }
 
-    @Primary
-    @Bean("db1SqlSessionFactory")
-    @Throws(Exception::class)
-    fun db1SqlSessionFactory(dataSource: DataSource): SqlSessionFactory? {
-        /**
-         * 使用 mybatis plus 配置
-         */
-        val b1 = MybatisSqlSessionFactoryBean()
-        b1.setDataSource(dataSource)
-        return b1.getObject()
-    }
+//    @Primary
+//    @Bean("db1SqlSessionFactory")
+//    @Throws(Exception::class)
+//    fun db1SqlSessionFactory(dataSource: DataSource): SqlSessionFactory? {
+//        /**
+//         * 使用 mybatis plus 配置
+//         */
+//        val b1 = MybatisSqlSessionFactoryBean()
+//        b1.setDataSource(dataSource)
+//        return b1.getObject()
+//    }
 }
 
 
