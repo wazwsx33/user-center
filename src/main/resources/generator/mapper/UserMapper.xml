@@ -16,7 +16,7 @@
             <result property="userStatus" column="userStatus" />
             <result property="createTime" column="createTime" />
             <result property="updateTime" column="updateTime" />
-            <result property="idDelete" column="idDelete" />
+            <result property="isDelete" column="idDelete" />
     </resultMap>
 
     <sql id="Base_Column_List">

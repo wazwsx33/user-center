@@ -2,8 +2,8 @@ package com.peanut.usercenter.model.domain
 
 import com.baomidou.mybatisplus.annotation.IdType
 import com.baomidou.mybatisplus.annotation.TableId
+import com.baomidou.mybatisplus.annotation.TableLogic
 import com.baomidou.mybatisplus.annotation.TableName
-import lombok.Data
 import java.util.*
 
 /**
@@ -20,55 +20,55 @@ data class User (
     /**
      * 用户昵称
      */
-    private val username: String? = null,
+    val username: String? = null,
 
     /**
      * 账号
      */
-    private val userAccount: String? = null,
+    val userAccount: String? = null,
 
     /**
      * 用户头像
      */
-    private val avatarUrl: String? = null,
+    val avatarUrl: String? = null,
 
     /**
      * 性别
      */
-    private val gender: Int? = null,
+    val gender: Int? = null,
 
     /**
      * 密码
      */
-    private val userPassword: String? = null,
+    val userPassword: String? = null,
 
     /**
      * 电话
      */
-    private val phone: String? = null,
+    val phone: String? = null,
 
     /**
      * 邮箱
      */
-    private val email: String? = null,
+    val email: String? = null,
 
     /**
      * 用户状态  0-正常
      */
-    private val userStatus: Int? = null,
+    val userStatus: Int? = null,
 
     /**
      * 创建时间
      */
-    private val createTime: Date? = null,
+    val createTime: Date? = null,
 
     /**
      * 更新时间
      */
-    private val updateTime: Date? = null,
+    val updateTime: Date? = null,
 
     /**
      * 是否删除
      */
-    private val idDelete: Int? = null,
+    @TableLogic val isDelete: Int? = null,
 )
