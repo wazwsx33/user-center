@@ -1,11 +1,14 @@
 package com.peanut.usercenter.controller
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
+import com.peanut.usercenter.constant.UserConstant
 import com.peanut.usercenter.model.domain.User
 import com.peanut.usercenter.model.domain.request.UserLoginRequest
 import com.peanut.usercenter.model.domain.request.UserRegisterRequest
 import com.peanut.usercenter.service.UserService
 import jakarta.annotation.Resource
 import jakarta.servlet.http.HttpServletRequest
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -53,5 +56,34 @@ class UserController {
             userPassword = userPassword,
             request = request
         )
+    }
+
+    @GetMapping("/search")
+    fun searchUsers(username: String?, request: HttpServletRequest): List<User> {
+        if (!isAdmin(request)) {
+            return emptyList()
+        }
+        val wrapper = QueryWrapper<User>()
+        if (username?.isNotBlank() == true) {
+            wrapper.like("username", username)
+        }
+        val userlist = userService.list(wrapper)
+        return userlist.map { userService.getSafetyUser(it) }
+    }
+
+    @PostMapping("/delete")
+    fun deleteUser(@RequestBody id: Long?, request: HttpServletRequest): Boolean {
+        if (id == null || id <= 0) {
+            return false
+        }
+        if (!isAdmin(request)) {
+            return false
+        }
+        return userService.removeById(id)
+    }
+
+    private fun isAdmin(request: HttpServletRequest): Boolean {
+        val user = request.session.getAttribute(UserConstant.USER_LOGIN_STATE) as? User
+        return user != null && user.role == UserConstant.ADMIN_ROLE
     }
 }

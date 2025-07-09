@@ -2,6 +2,7 @@ package com.peanut.usercenter.service.impl
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
+import com.peanut.usercenter.constant.UserConstant
 import com.peanut.usercenter.mapper.UserMapper
 import com.peanut.usercenter.model.domain.User
 import com.peanut.usercenter.service.UserService
@@ -22,7 +23,7 @@ class UserServiceImpl : ServiceImpl<UserMapper, User>(), UserService {
     companion object {
         private const val SALT = "salt" //二次混淆密码
         private val LOGGER = LoggerFactory.getLogger(UserServiceImpl::class.java)
-        private const val USER_LOGIN_STATE = "user_login_state"
+
     }
 
     @Resource
@@ -118,22 +119,31 @@ class UserServiceImpl : ServiceImpl<UserMapper, User>(), UserService {
             return null
         }
 
-        // 用户脱敏，防止敏感信息泄露
-        val safetyUser = User(
-            id = user.id,
-            username = user.username,
-            userAccount = user.userAccount,
-            avatarUrl = user.avatarUrl,
-            gender = user.gender,
-            phone = user.phone,
-            email = user.email,
-            userStatus = user.userStatus,
-            createTime = user.createTime,
-        )
+
+        val safetyUser = getSafetyUser(user)
 
         //记录用户登录态
-        request.session.setAttribute(USER_LOGIN_STATE, safetyUser)
+        request.session.setAttribute(UserConstant.USER_LOGIN_STATE, safetyUser)
 
+        return safetyUser
+    }
+
+    /**
+     * 用户脱敏，防止敏感信息泄露
+     */
+    override fun getSafetyUser(originUser: User): User {
+        val safetyUser = User(
+            id = originUser.id,
+            username = originUser.username,
+            userAccount = originUser.userAccount,
+            avatarUrl = originUser.avatarUrl,
+            gender = originUser.gender,
+            phone = originUser.phone,
+            email = originUser.email,
+            userStatus = originUser.userStatus,
+            createTime = originUser.createTime,
+            role = originUser.role
+        )
         return safetyUser
     }
 }

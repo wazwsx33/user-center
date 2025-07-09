@@ -27,4 +27,11 @@ interface UserService : IService<User> {
      * @return 脱敏后的用户信息
      */
     fun userLogin(userAccount: String?, userPassword: String?, request: HttpServletRequest): User?
+
+    /**
+     * 获取脱敏后的用户信息
+     * @param originUser 用户
+     * @return 脱敏后的用户信息
+     */
+    fun getSafetyUser(originUser: User): User
 }
