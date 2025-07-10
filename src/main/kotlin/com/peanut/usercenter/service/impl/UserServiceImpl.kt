@@ -131,7 +131,10 @@ class UserServiceImpl : ServiceImpl<UserMapper, User>(), UserService {
     /**
      * 用户脱敏，防止敏感信息泄露
      */
-    override fun getSafetyUser(originUser: User): User {
+    override fun getSafetyUser(originUser: User?): User? {
+        if (originUser == null) {
+            return null
+        }
         val safetyUser = User(
             id = originUser.id,
             username = originUser.username,

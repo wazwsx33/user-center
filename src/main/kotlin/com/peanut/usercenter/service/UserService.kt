@@ -33,5 +33,5 @@ interface UserService : IService<User> {
      * @param originUser 用户
      * @return 脱敏后的用户信息
      */
-    fun getSafetyUser(originUser: User): User
+    fun getSafetyUser(originUser: User?): User?
 }

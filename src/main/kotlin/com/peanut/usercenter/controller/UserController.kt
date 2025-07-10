@@ -68,7 +68,7 @@ class UserController {
             wrapper.like("username", username)
         }
         val userlist = userService.list(wrapper)
-        return userlist.map { userService.getSafetyUser(it) }
+        return userlist.mapNotNull { userService.getSafetyUser(it) }
     }
 
     @PostMapping("/delete")
@@ -85,5 +85,17 @@ class UserController {
     private fun isAdmin(request: HttpServletRequest): Boolean {
         val user = request.session.getAttribute(UserConstant.USER_LOGIN_STATE) as? User
         return user != null && user.role == UserConstant.ADMIN_ROLE
+    }
+
+
+    @GetMapping("/current")
+    fun getCurrentUser(request: HttpServletRequest): User? {
+        val currentUser = request.session.getAttribute(UserConstant.USER_LOGIN_STATE) as? User
+        if (currentUser == null) {
+            return null
+        }
+        //可能用户下次登录的时候，用户信息已经发生了变化，比如手机号邮箱等，这时session中缓存的数据还是老的，这里需要重新获取一下
+        val newStateUser = userService.getById(currentUser.id)
+        return userService.getSafetyUser(newStateUser)
     }
 }
