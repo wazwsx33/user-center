@@ -34,4 +34,11 @@ interface UserService : IService<User> {
      * @return 脱敏后的用户信息
      */
     fun getSafetyUser(originUser: User?): User?
+
+    /**
+     * 用户注销
+     * @param request 用户
+     * @return 注销结果
+     */
+    fun userLogout(request: HttpServletRequest): Int?
 }

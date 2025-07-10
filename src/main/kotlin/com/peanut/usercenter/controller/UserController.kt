@@ -58,6 +58,12 @@ class UserController {
         )
     }
 
+    @PostMapping("/logout")
+    fun userLogout(request: HttpServletRequest?): Int? {
+        request ?: return null
+        return userService.userLogout(request)
+    }
+
     @GetMapping("/search")
     fun searchUsers(username: String?, request: HttpServletRequest): List<User> {
         if (!isAdmin(request)) {
@@ -98,4 +104,7 @@ class UserController {
         val newStateUser = userService.getById(currentUser.id)
         return userService.getSafetyUser(newStateUser)
     }
+
+
+
 }

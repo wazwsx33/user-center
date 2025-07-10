@@ -149,6 +149,11 @@ class UserServiceImpl : ServiceImpl<UserMapper, User>(), UserService {
         )
         return safetyUser
     }
+
+    override fun userLogout(request: HttpServletRequest): Int? {
+        request.session.removeAttribute(UserConstant.USER_LOGIN_STATE)
+        return 1
+    }
 }
 
 
