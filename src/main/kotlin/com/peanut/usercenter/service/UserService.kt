@@ -15,9 +15,10 @@ interface UserService : IService<User> {
      * @param userAccount 用户账号
      * @param userPassword 用户密码
      * @param checkPassword 密码确认
+     * @param code 用户编号
      * @return 用户id
      */
-    fun userRegister(userAccount: String?, userPassword: String?, checkPassword: String?): Long
+    fun userRegister(userAccount: String?, userPassword: String?, checkPassword: String?, code: String?): Long
 
     /**
      * 用户登录

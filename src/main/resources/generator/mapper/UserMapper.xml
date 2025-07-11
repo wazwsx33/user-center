@@ -16,12 +16,14 @@
             <result property="userStatus" column="userStatus" />
             <result property="createTime" column="createTime" />
             <result property="updateTime" column="updateTime" />
-            <result property="isDelete" column="idDelete" />
+            <result property="isDelete" column="isDelete" />
+            <result property="role" column="role" />
+            <result property="code" column="code" />
     </resultMap>
 
     <sql id="Base_Column_List">
         id,username,userAccount,avatarUrl,gender,userPassword,
         phone,email,userStatus,createTime,updateTime,
-        idDelete
+        isDelete,role,code
     </sql>
 </mapper>

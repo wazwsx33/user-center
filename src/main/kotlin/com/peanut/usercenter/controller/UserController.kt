@@ -32,13 +32,15 @@ class UserController {
         val userAccount = userRegisterRequest.userAccount
         val userPassword = userRegisterRequest.userPassword
         val checkPassword = userRegisterRequest.checkPassword
-        if (userAccount.isNullOrBlank() || userPassword.isNullOrBlank() || checkPassword.isNullOrBlank()) {
+        val code = userRegisterRequest.code
+        if (userAccount.isNullOrBlank() || userPassword.isNullOrBlank() || checkPassword.isNullOrBlank() || code.isNullOrBlank()) {
             return null
         }
         return userService.userRegister(
             userAccount = userAccount,
             userPassword = userPassword,
-            checkPassword = checkPassword
+            checkPassword = checkPassword,
+            code = code
         )
 
     }

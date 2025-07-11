@@ -41,14 +41,14 @@ internal class UserServiceTest {
 
     @Test
     fun userRegister() {
-        var userAccount = "wzy melon"
+        var userAccount = "wzy123456"
         var userPassword = "12345678"
         var checkPassword = "12345678"
-        var result = userService?.userRegister(userAccount, userPassword, checkPassword) ?: -1
+        var result = userService?.userRegister(userAccount, userPassword, checkPassword, "1") ?: -1
         Assertions.assertEquals(-1, result)
 
-        userAccount = "wzywatermelon"
-        result = userService?.userRegister(userAccount, userPassword, checkPassword) ?: -1
+        userAccount = "wzywatermelon222"
+        result = userService?.userRegister(userAccount, userPassword, checkPassword, "1") ?: -1
         Assertions.assertTrue(result > 0)
     }
 }

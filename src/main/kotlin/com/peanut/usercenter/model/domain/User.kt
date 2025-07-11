@@ -75,5 +75,10 @@ data class User (
     /**
      * 用户角色 0-普通用户 1-管理员
      */
-    val role: Int? = null
+    val role: Int? = null,
+
+    /**
+     * 用户编号
+     */
+    val code: String? = null
 )

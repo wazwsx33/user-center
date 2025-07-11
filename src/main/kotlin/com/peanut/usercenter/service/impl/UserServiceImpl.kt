@@ -32,10 +32,11 @@ class UserServiceImpl : ServiceImpl<UserMapper, User>(), UserService {
     override fun userRegister(
         userAccount: String?,
         userPassword: String?,
-        checkPassword: String?
+        checkPassword: String?,
+        code: String?
     ): Long {
         //非空校验
-        if (userAccount.isNullOrBlank() || userPassword.isNullOrBlank() || checkPassword.isNullOrBlank()) {
+        if (userAccount.isNullOrBlank() || userPassword.isNullOrBlank() || checkPassword.isNullOrBlank() || code.isNullOrBlank()) {
             return -1
         }
 
@@ -56,12 +57,24 @@ class UserServiceImpl : ServiceImpl<UserMapper, User>(), UserService {
             return -1
         }
 
+        if (code.length > 5) {
+            return -1
+        }
+
         //重复账户校验
         //放到最后，参数校验都通过后才查询数据库，避免资源浪费
         val count = userMapper.selectCount(QueryWrapper<User>().also {
             it.eq("userAccount", userAccount)
         })
         if (count > 0) {
+            return -1
+        }
+
+        //查询用户编号是否唯一
+        val codeCount = userMapper.selectCount(QueryWrapper<User>().also {
+            it.eq("code", code)
+        })
+        if (codeCount > 0) {
             return -1
         }
 
@@ -145,7 +158,8 @@ class UserServiceImpl : ServiceImpl<UserMapper, User>(), UserService {
             email = originUser.email,
             userStatus = originUser.userStatus,
             createTime = originUser.createTime,
-            role = originUser.role
+            role = originUser.role,
+            code = originUser.code
         )
         return safetyUser
     }

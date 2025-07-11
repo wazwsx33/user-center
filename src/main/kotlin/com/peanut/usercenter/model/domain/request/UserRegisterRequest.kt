@@ -10,5 +10,6 @@ import java.io.Serializable
 data class UserRegisterRequest(
     val userAccount: String? = null,
     val userPassword: String? = null,
-    val checkPassword: String? = null
+    val checkPassword: String? = null,
+    val code: String? = null
 ) : Serializable
